@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\User;
+
 class UserController extends Controller
 {
     /**
@@ -37,7 +39,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create($request->all());
+        return ["created" => true];
     }
 
     /**
@@ -48,7 +51,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return User::find($id);
     }
 
     /**
@@ -71,7 +74,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->update($request->all());
+        return ['updated' => true];
     }
 
     /**
@@ -82,6 +87,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+        return ['deleted' => true];
     }
 }
