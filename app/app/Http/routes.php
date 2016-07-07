@@ -15,5 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('user', 'UserController', 
+Route::group(['prefix' => 'v1'], function() {
+    Route::resource('user', 'UserController', 
                 ['only' => ['index', 'store', 'update', 'destroy', 'show']]);
+});
+
+Route::group(['prefix' => 'v2'], function() {
+    Route::get('user/names', 'UserController@names');
+    Route::resource('user', 'UserController', 
+                ['only' => ['index', 'store', 'update', 'destroy', 'show']]);
+});
