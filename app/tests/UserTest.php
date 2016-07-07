@@ -33,6 +33,21 @@ class UserTest extends TestCase
         $this->delete('user/1')->seeJson(['deleted' => true]);
     }
 
+    // Metodo para verificar la validacion de errores en crear usuario
+    public function testValidationErrorOnCreateUser()
+    {
+        // $data = $this->getData(['name' => '', 'email' => 'felix']);
+        /*
+            dump() nos permite imprimir en pantalla la respuesta obtenida en la petición, en este caso estamos enviando el campo name vacío y para el campo email un valor que no es una cuenta de email válida.
+        */
+        // $this->post('/user', $data)->dump();
+    }
+
+    public function testNotFoundUser()
+    {
+        $this->get('user/10')->seeJsonEquals(['error' => 'Model not found']);
+    }
+
     public function getData($custom = array())
     {
         $data = [

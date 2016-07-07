@@ -19,8 +19,35 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create($request->all());
-        return ["created" => true];
+        // Modificar metodo para que maneje validaciones
+        // Creamos las reglas de validacion
+        $rules = [
+            'name'      =>  'required',
+            'email'     =>  'required|email',
+            'password'  =>  'required'
+        ];
+
+        // Utilizamos un manejador de excepciones
+        try {
+
+            // Ejecutamos el validados, en caso de que falle devolvemos la respuesta
+            $validator = \Validator::make($request->all(), $rules);
+
+            if ( $validator->fails() ) {
+                return [
+                    'created'   =>  false,
+                    'errors'    =>  $validator->errors()->all()
+                ];
+            }
+
+            User::create($request->all());
+
+            return ["created" => true];
+
+        } catch (Exception $e) {
+            \Log::info('Error creating user: ' . $e);
+            return \Response::json(['created' => false], 500);
+        }
     }
 
     /**
@@ -31,7 +58,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return User::find($id);
+        /*
+            Cuando usamos el método findOrFail() forzamos a que la aplicación arroje una excepción de tipo ModelNotFoundException, podemos capturar entonces el tipo de excepcion y enviar una respuesta personalizada, esto lo hacemos editando el archivo app/Exceptions/Handler.php
+        */
+        return User::findOrFail($id);
     }
 
     /**
