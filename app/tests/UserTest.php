@@ -7,13 +7,14 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class UserTest extends TestCase
 {
 
-    use DatabaseTransactions;
+    use DatabaseMigrations;
     use WithoutMiddleware;
 
 
     public function testUserCreate()
     {
         $data = $this->getData();
+        // $data = json_encode($data);
 
         // Creamos un nuevo usuario y verificamos la respuesta
         $this->post('/user', $data)
