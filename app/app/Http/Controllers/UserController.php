@@ -56,12 +56,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         /*
             Cuando usamos el método findOrFail() forzamos a que la aplicación arroje una excepción de tipo ModelNotFoundException, podemos capturar entonces el tipo de excepcion y enviar una respuesta personalizada, esto lo hacemos editando el archivo app/Exceptions/Handler.php
         */
-        return User::findOrFail($id);
+        // return User::findOrFail($id);
+        return $user;
     }
 
     /**
