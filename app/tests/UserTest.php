@@ -48,6 +48,12 @@ class UserTest extends TestCase
         $this->get('user/10')->seeJsonEquals(['error' => 'Model not found']);
     }
 
+    public function testValidationErrorOnUpdateUser()
+    {
+        /*$data = $this->getData(['name' => '', 'email' => 'felix']);
+        $this->put('/user/1', $data)->dump();*/
+    }
+
     public function getData($custom = array())
     {
         $data = [

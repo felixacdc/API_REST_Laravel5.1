@@ -73,9 +73,32 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        $user->update($request->all());
-        return ['updated' => true];
+        $rules = [
+            'name'      =>  'required',
+            'email'     =>  'required|email',
+            'password'  =>  'required'
+        ];
+
+        try {
+
+            $validator = \Validator::make($request->all(), $rules);
+
+            if ( $validator->fails() ) {
+                return [
+                    'updated'   =>  false,
+                    'errors'    =>  $validator->errors()->all()
+                ];
+            }
+
+            $user = User::findOrFail($id);
+            $user->update($request->all());
+            return ['updated' => true];
+        } catch (Exception $e) {
+            \Log::info('Error creating user: ' . $e);
+            return \Response::json(['updated' => false], 500);
+        }
+
+        
     }
 
     /**
@@ -86,7 +109,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::destroy($id);
+        $user = User::destroy($id);
         return ['deleted' => true];
     }
 }
