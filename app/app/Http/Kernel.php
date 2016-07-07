@@ -11,6 +11,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+    // Todos los middlewares agregados en este array se ejecutan con cada peticion
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \App\Http\Middleware\EncryptCookies::class,
@@ -18,6 +19,7 @@ class Kernel extends HttpKernel
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \App\Http\Middleware\VerifyCsrfToken::class,
+        \App\Http\Middleware\VerifyAccessKey::class,
     ];
 
     /**
