@@ -12,6 +12,7 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        //
+        // Aqui se agregan las rutas que se quieren excluir de la verificacion por token
+        'user*'
     ];
 }

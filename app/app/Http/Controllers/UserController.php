@@ -11,6 +11,12 @@ use App\User;
 
 class UserController extends Controller
 {
+
+    public function index()
+    {
+        return User::all();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
